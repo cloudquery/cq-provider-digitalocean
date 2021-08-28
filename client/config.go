@@ -3,15 +3,15 @@ package client
 // Provider Configuration
 
 type Config struct {
-	// here goes top level configuration for your provider
-	// This object will be pass filled in depending on user's configuration
-	ExampleConfig  bool      `yaml:"example_config"`
-
-	// resources that user asked to fetch
-	// each resource can have optional additional configurations
-	Resources  []struct {
-		Name  string
-		Other map[string]interface{} `yaml:",inline"`
-	}
+	Token string `hcl:"token"`
 }
 
+func (c Config) Example() string {
+	return `
+		configuration {
+			// API Token to access DigialOcean resources 
+			// See https://docs.digitalocean.com/reference/api/api-reference/#section/Authentication
+			token = <YOUR_API_TOKEN_HERE>
+		}
+`
+}

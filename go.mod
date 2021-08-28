@@ -1,10 +1,11 @@
-module github.com/cloudquery/cq-provider-template
+module github.com/cloudquery/cq-provider-digitalocean
 
 go 1.16
 
 require (
-	github.com/cloudquery/cloudquery v0.13.8
-	github.com/cloudquery/cq-provider-aws v0.4.12
-	github.com/cloudquery/cq-provider-sdk v0.2.7
+	github.com/cloudquery/cq-provider-sdk v0.3.4
+	github.com/digitalocean/godo v1.63.0
 	github.com/hashicorp/go-hclog v0.16.1
+	github.com/spf13/cast v1.4.0
+	github.com/thoas/go-funk v0.8.1-0.20210502090430-efae847b30ab
 )
