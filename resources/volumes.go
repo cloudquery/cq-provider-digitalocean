@@ -95,7 +95,7 @@ func Volumes() *schema.Table {
 		},
 		Relations: []*schema.Table{
 			{
-				Name:        "digitalocean_droplets",
+				Name:        "digitalocean_volume_droplets",
 				Description: "Droplets that are co-located on the same physical hardware",
 				Resolver:    fetchVolumeDroplets,
 				Columns: []schema.Column{

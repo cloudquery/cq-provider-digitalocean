@@ -38,7 +38,7 @@ func BillingHistory() *schema.Table {
 			},
 			{
 				Name:        "date",
-				Description: "Time the billing history entry occured.",
+				Description: "Time the billing history entry occurred.",
 				Type:        schema.TypeTimestamp,
 			},
 			{
