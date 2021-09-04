@@ -28,7 +28,6 @@ Droplet represents a DigitalOcean Droplet
 |image_tags|text[]|A flat array of tag names as strings to be applied to the resource. Tag names may be for either existing or new tags.|
 |image_status|text|A status string indicating the state of a custom image. This may be `NEW`,  `available`, `pending`, `deleted`, or `retired`.|
 |image_error_message|text|A string containing information about errors that may occur when importing  a custom image.|
-|size_slug|text|A human-readable string that is used to uniquely identify each size.|
 |size_memory|bigint|The amount of RAM allocated to Droplets created of this size. The value is represented in megabytes.|
 |size_vcpus|bigint||
 |size_disk|bigint|The amount of disk space set aside for Droplets of this size. The value is represented in gigabytes.|

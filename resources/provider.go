@@ -24,6 +24,14 @@ func Provider() *provider.Provider {
 			"domains":         Domains(),
 			"billing_history": BillingHistory(),
 			"volumes":         Volumes(),
+			"spaces":          Spaces(),
+			"floating_ips":    FloatingIps(),
+			"registry":        Registries(),
+			"databases":       Databases(),
+			"firewalls":       Firewalls(),
+			"cdns":            Cdns(),
+			"certificates":    Certificates(),
+			"load_balancers":  LoadBalancers(),
 		},
 		Config: func() provider.Config {
 			return &client.Config{}

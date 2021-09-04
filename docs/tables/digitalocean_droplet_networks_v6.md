@@ -5,7 +5,7 @@ NetworkV6 represents a DigitalOcean IPv6 network.
 | Name        | Type           | Description  |
 | ------------- | ------------- | -----  |
 |droplet_cq_id|uuid|Unique CloudQuery ID of digitalocean_droplets table (FK)|
-|ip_address|cidr|The IP address of the IPv6 network interface.|
-|netmask|cidr|The netmask of the IPv6 network interface.|
-|gateway|cidr|The gateway of the specified IPv6 network interface.|
+|ip_address|inet|The IP address of the IPv6 network interface.|
+|netmask|inet|The netmask of the IPv6 network interface.|
+|gateway|inet|The gateway of the specified IPv6 network interface.|
 |type|text|The type of the IPv6 network interface.  **Note**: IPv6 private  networking is not currently supported. |

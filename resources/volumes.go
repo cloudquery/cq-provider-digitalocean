@@ -131,12 +131,12 @@ func fetchVolumes(ctx context.Context, meta schema.ClientMeta, parent *schema.Re
 		ListOptions: &godo.ListOptions{PerPage: client.MaxItemsPerPage},
 	}
 	for {
-		domains, resp, err := svc.DoClient.Storage.ListVolumes(ctx, opt)
+		volumes, resp, err := svc.DoClient.Storage.ListVolumes(ctx, opt)
 		if err != nil {
 			return err
 		}
 		// pass the current page's project to our result channel
-		res <- domains
+		res <- volumes
 		// if we are at the last page, break out the for loop
 		if resp.Links == nil || resp.Links.IsLastPage() {
 			break
