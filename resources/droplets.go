@@ -157,12 +157,6 @@ func Droplets() *schema.Table {
 				Resolver:    schema.PathResolver("Image.ErrorMessage"),
 			},
 			{
-				Name:        "size_slug",
-				Description: "A human-readable string that is used to uniquely identify each size.",
-				Type:        schema.TypeString,
-				Resolver:    schema.PathResolver("Size.Slug"),
-			},
-			{
 				Name:        "size_memory",
 				Description: "The amount of RAM allocated to Droplets created of this size. The value is represented in megabytes.",
 				Type:        schema.TypeBigInt,
@@ -312,20 +306,20 @@ func Droplets() *schema.Table {
 					{
 						Name:        "ip_address",
 						Description: "The IP address of the IPv4 network interface.",
-						Type:        schema.TypeCIDR,
-						Resolver:    schema.IPNetResolver("IPAddress"),
+						Type:        schema.TypeInet,
+						Resolver:    schema.IPAddressResolver("IPAddress"),
 					},
 					{
 						Name:        "netmask",
 						Description: "The netmask of the IPv4 network interface.",
-						Type:        schema.TypeCIDR,
-						Resolver:    schema.IPNetResolver("Netmask"),
+						Type:        schema.TypeInet,
+						Resolver:    schema.IPAddressResolver("Netmask"),
 					},
 					{
 						Name:        "gateway",
 						Description: "The gateway of the specified IPv4 network interface.\n\nFor private interfaces, a gateway is not provided. This is denoted by\nreturning `nil` as its value.\n",
-						Type:        schema.TypeCIDR,
-						Resolver:    schema.IPNetResolver("Gateway"),
+						Type:        schema.TypeInet,
+						Resolver:    schema.IPAddressResolver("Gateway"),
 					},
 					{
 						Name:        "type",
@@ -348,20 +342,20 @@ func Droplets() *schema.Table {
 					{
 						Name:        "ip_address",
 						Description: "The IP address of the IPv6 network interface.",
-						Type:        schema.TypeCIDR,
-						Resolver:    schema.IPNetResolver("IPAddress"),
+						Type:        schema.TypeInet,
+						Resolver:    schema.IPAddressResolver("IPAddress"),
 					},
 					{
 						Name:        "netmask",
 						Description: "The netmask of the IPv6 network interface.",
-						Type:        schema.TypeCIDR,
-						Resolver:    schema.IPNetResolver("Netmask"),
+						Type:        schema.TypeInet,
+						Resolver:    schema.IPAddressResolver("Netmask"),
 					},
 					{
 						Name:        "gateway",
 						Description: "The gateway of the specified IPv6 network interface.",
-						Type:        schema.TypeCIDR,
-						Resolver:    schema.IPNetResolver("Gateway"),
+						Type:        schema.TypeInet,
+						Resolver:    schema.IPAddressResolver("Gateway"),
 					},
 					{
 						Name:        "type",
@@ -407,12 +401,12 @@ func fetchDroplets(ctx context.Context, meta schema.ClientMeta, parent *schema.R
 		PerPage: client.MaxItemsPerPage,
 	}
 	for {
-		domains, resp, err := svc.DoClient.Droplets.List(ctx, opt)
+		droplets, resp, err := svc.DoClient.Droplets.List(ctx, opt)
 		if err != nil {
 			return err
 		}
 		// pass the current page's project to our result channel
-		res <- domains
+		res <- droplets
 		// if we are at the last page, break out the for loop
 		if resp.Links == nil || resp.Links.IsLastPage() {
 			break

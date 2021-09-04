@@ -3,6 +3,7 @@ module github.com/cloudquery/cq-provider-digitalocean
 go 1.16
 
 require (
+	github.com/Masterminds/squirrel v1.5.0 // indirect
 	github.com/cloudquery/cq-provider-sdk v0.3.4
 	github.com/digitalocean/godo v1.63.0
 	github.com/hashicorp/go-hclog v0.16.1

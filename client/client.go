@@ -4,6 +4,7 @@ import (
 	"github.com/cloudquery/cq-provider-sdk/provider/schema"
 	"github.com/digitalocean/godo"
 	"github.com/hashicorp/go-hclog"
+	"os"
 )
 
 const MaxItemsPerPage = 200
@@ -24,10 +25,28 @@ func Configure(logger hclog.Logger, config interface{}) (schema.ClientMeta, erro
 	providerConfig := config.(*Config)
 	// Init your client and 3rd party clients using the user's configuration
 	// passed by the SDK providerConfig
+	// if token is not present, try from environ
+
+	if providerConfig.Token == "" {
+		providerConfig.Token = getTokenFromEnv()
+	}
+
 	client := Client{
 		logger:   logger,
 		DoClient: godo.NewFromToken(providerConfig.Token),
 	}
 	// Return the initialized client and it will be passed to your resources
 	return &client, nil
+}
+
+func getTokenFromEnv() string {
+	doToken := os.Getenv("DIGITALOCEAN_TOKEN")
+	doAccessToken := os.Getenv("DIGITALOCEAN_ACCESS_TOKEN")
+	if doToken != "" {
+		return doToken
+	}
+	if doAccessToken != "" {
+		return doAccessToken
+	}
+	return ""
 }
