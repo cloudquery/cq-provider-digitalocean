@@ -113,7 +113,7 @@ func Volumes() *schema.Table {
 					{
 						Name:        "volume_id",
 						Description: "The unique identifier for the block storage volume.",
-						Type:        schema.TypeBigInt,
+						Type:        schema.TypeString,
 					},
 				},
 			},
