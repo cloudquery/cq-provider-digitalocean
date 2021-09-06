@@ -14,16 +14,15 @@ import (
 	"github.com/hashicorp/go-hclog"
 )
 
-var defaultSpacesRegions = []string{"nyc3"}
+var defaultSpacesRegions = []string{"nyc3", "sfo3", "ams3", "sgp1", "fra1"}
 
 const MaxItemsPerPage = 200
 
 type Client struct {
 	// This is a client that you need to create and initialize in Configure
 	// It will be passed for each resource fetcher.
-	logger   hclog.Logger
-	DoClient *godo.Client
-
+	logger       hclog.Logger
+	DoClient     *godo.Client
 	Regions      []string
 	SpacesRegion string
 
@@ -67,14 +66,9 @@ func (s SpacesEndpointResolver) ResolveEndpoint(_, region string) (aws.Endpoint,
 
 func Configure(logger hclog.Logger, config interface{}) (schema.ClientMeta, error) {
 	providerConfig := config.(*Config)
-	// Init your client and 3rd party clients using the user's configuration
-	// passed by the SDK providerConfig
-	// if token is not present, try from environ
-
 	if providerConfig.Token == "" {
 		providerConfig.Token = getTokenFromEnv()
 	}
-
 	awsCfg, err := awscfg.LoadDefaultConfig(context.Background(),
 		awscfg.WithCredentialsProvider(SpacesCredentialsProvider{providerConfig.SpacesAccessKey, providerConfig.SpacesAccessKeyId}),
 		awscfg.WithEndpointResolver(SpacesEndpointResolver{}),
@@ -83,17 +77,24 @@ func Configure(logger hclog.Logger, config interface{}) (schema.ClientMeta, erro
 	if err != nil {
 		return nil, err
 	}
-	awsCfg.ClientLogMode = aws.LogRequest | aws.LogResponse | aws.LogRetries
-	awsCfg.Logger = AwsLogger{logger}
+
+	if providerConfig.SpacesDebugLogging {
+		awsCfg.ClientLogMode = aws.LogRequest | aws.LogResponse | aws.LogRetries
+		awsCfg.Logger = AwsLogger{logger}
+	}
+
+	spacesRegions := defaultSpacesRegions
+	if len(providerConfig.SpacesRegions) > 0 {
+		spacesRegions = providerConfig.SpacesRegions
+	}
+
 	client := Client{
 		logger:       logger,
 		DoClient:     godo.NewFromToken(providerConfig.Token),
-		Regions:      defaultSpacesRegions,
+		Regions:      spacesRegions,
 		SpacesRegion: "nyc3",
 		S3:           s3.NewFromConfig(awsCfg),
 	}
-
-	// Return the initialized client and it will be passed to your resources
 	return &client, nil
 }
 
