@@ -30,8 +30,8 @@ func LoadBalancers() *schema.Table {
 			{
 				Name:        "ip",
 				Description: "An attribute containing the public-facing IP address of the load balancer.",
-				Type:        schema.TypeCIDR,
-				Resolver:    schema.IPNetResolver("IP"),
+				Type:        schema.TypeInet,
+				Resolver:    schema.IPAddressResolver("IP"),
 			},
 			{
 				Name:        "size",
