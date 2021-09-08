@@ -348,8 +348,8 @@ func Droplets() *schema.Table {
 					{
 						Name:        "netmask",
 						Description: "The netmask of the IPv6 network interface.",
-						Type:        schema.TypeInet,
-						Resolver:    schema.IPAddressResolver("Netmask"),
+						Type:        schema.TypeBigInt,
+						Resolver:    schema.PathResolver("Netmask"),
 					},
 					{
 						Name:        "gateway",

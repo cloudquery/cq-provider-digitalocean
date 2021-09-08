@@ -4,5 +4,5 @@ resource "digitalocean_project" "do_project" {
   purpose     = "E2E"
   environment = "Development"
 
-  resources = [digitalocean_droplet.do_droplet.urn]
+  resources = [digitalocean_droplet.do_droplet_other_project.urn]
 }

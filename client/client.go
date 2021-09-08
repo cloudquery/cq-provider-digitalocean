@@ -69,6 +69,9 @@ func Configure(logger hclog.Logger, config interface{}) (schema.ClientMeta, erro
 	if providerConfig.Token == "" {
 		providerConfig.Token = getTokenFromEnv()
 	}
+	if providerConfig.SpacesAccessKey == "" || providerConfig.SpacesAccessKeyId == "" {
+		providerConfig.SpacesAccessKeyId, providerConfig.SpacesAccessKey = getSpacesTokenFromEnv()
+	}
 	awsCfg, err := awscfg.LoadDefaultConfig(context.Background(),
 		awscfg.WithCredentialsProvider(SpacesCredentialsProvider{providerConfig.SpacesAccessKey, providerConfig.SpacesAccessKeyId}),
 		awscfg.WithEndpointResolver(SpacesEndpointResolver{}),
@@ -110,6 +113,18 @@ func getTokenFromEnv() string {
 	return ""
 }
 
+func getSpacesTokenFromEnv() (string, string) {
+	spacesAccessKey := os.Getenv("SPACES_ACCESS_KEY_ID")
+	spacesSecretKey := os.Getenv("SPACES_SECRET_ACCESS_KEY")
+	if spacesAccessKey == "" {
+		return "", ""
+	}
+	if spacesSecretKey == "" {
+		return "", ""
+	}
+	return spacesAccessKey, spacesSecretKey
+}
+
 type AwsLogger struct {
 	l hclog.Logger
 }
@@ -121,3 +136,6 @@ func (a AwsLogger) Logf(classification logging.Classification, format string, v 
 		a.l.Debug(fmt.Sprintf(format, v...))
 	}
 }
+
+// 6DF7UBMGFLP47S5CEYEN
+// xkCKWZpXtWRP0nh9ladSHKccDbrMnpY+Nm8F+xbH99M
