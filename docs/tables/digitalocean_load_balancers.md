@@ -6,7 +6,7 @@ LoadBalancer represents a DigitalOcean load balancer configuration. Tags can onl
 | ------------- | ------------- | -----  |
 |id|uuid|A unique ID that can be used to identify and reference a load balancer.|
 |name|text|A human-readable name for a load balancer instance.|
-|ip|cidr|An attribute containing the public-facing IP address of the load balancer.|
+|ip|inet|An attribute containing the public-facing IP address of the load balancer.|
 |size|text|The size of the load balancer. The available sizes are lb-small, lb-medium, or lb-large. You can resize load balancers after creation up to once per hour. You cannot resize a load balancer within the first hour of its creation|
 |algorithm|text|The load balancing algorithm used to determine which backend Droplet will be selected by a client. It must be either `round_robin` or `least_connections`.|
 |status|text|A status string indicating the current state of the load balancer. This can be `new`, `active`, or `errored`.|
