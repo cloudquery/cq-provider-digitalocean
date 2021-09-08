@@ -20,4 +20,5 @@ provider "aws" {
     // spaces_access_key_id = FROM ENV
      spaces_debug_logging = false
   }
+  resources = ["*"]
 }
