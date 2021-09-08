@@ -8,11 +8,11 @@ cloudquery {
   }
 
   connection {
-    dsn = "host=localhost user=postgres password=pass database=postgres port=5432 ssl=disable"
+    dsn = "host=localhost user=postgres password=pass database=postgres port=5432 sslmode=disable"
   }
 }
 
-provider "aws" {
+provider "digitalocean" {
   configuration {
     // token = FROM ENV
      spaces_regions = ["nyc3", "sfo3", "ams3", "sgp1", "fra1"]
