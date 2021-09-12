@@ -2,7 +2,6 @@ package resources
 
 import (
 	"context"
-
 	"github.com/cloudquery/cq-provider-digitalocean/client"
 	"github.com/cloudquery/cq-provider-sdk/provider/schema"
 	"github.com/digitalocean/godo"
@@ -307,19 +306,19 @@ func Droplets() *schema.Table {
 						Name:        "ip_address",
 						Description: "The IP address of the IPv4 network interface.",
 						Type:        schema.TypeInet,
-						Resolver:    schema.IPAddressResolver("IPAddress"),
+						Resolver:    client.IPAddressResolver("IPAddress"),
 					},
 					{
 						Name:        "netmask",
 						Description: "The netmask of the IPv4 network interface.",
 						Type:        schema.TypeInet,
-						Resolver:    schema.IPAddressResolver("Netmask"),
+						Resolver:    client.IPAddressResolver("Netmask"),
 					},
 					{
 						Name:        "gateway",
 						Description: "The gateway of the specified IPv4 network interface.\n\nFor private interfaces, a gateway is not provided. This is denoted by\nreturning `nil` as its value.\n",
 						Type:        schema.TypeInet,
-						Resolver:    schema.IPAddressResolver("Gateway"),
+						Resolver:    client.IPAddressResolver("Gateway"),
 					},
 					{
 						Name:        "type",
@@ -343,7 +342,7 @@ func Droplets() *schema.Table {
 						Name:        "ip_address",
 						Description: "The IP address of the IPv6 network interface.",
 						Type:        schema.TypeInet,
-						Resolver:    schema.IPAddressResolver("IPAddress"),
+						Resolver:    client.IPAddressResolver("IPAddress"),
 					},
 					{
 						Name:        "netmask",
@@ -355,7 +354,7 @@ func Droplets() *schema.Table {
 						Name:        "gateway",
 						Description: "The gateway of the specified IPv6 network interface.",
 						Type:        schema.TypeInet,
-						Resolver:    schema.IPAddressResolver("Gateway"),
+						Resolver:    client.IPAddressResolver("Gateway"),
 					},
 					{
 						Name:        "type",
