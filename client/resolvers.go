@@ -34,7 +34,6 @@ func ResolveResourceIdFromUrn(_ context.Context, meta schema.ClientMeta, r *sche
 	return r.Set(c.Name, parts[2])
 }
 
-
 func IPAddressResolver(path string) schema.ColumnResolver {
 	return func(_ context.Context, meta schema.ClientMeta, r *schema.Resource, c schema.Column) error {
 		ipStr, err := cast.ToStringE(funk.Get(r.Item, path, funk.WithAllowZero()))
