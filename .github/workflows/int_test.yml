@@ -63,6 +63,6 @@ jobs:
         env:
           SLACK_CHANNEL: oss-tests
           SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE: 'DO - E2E Test'
-          SLACK_TITLE: DO - e2e test failed
+          SLACK_MESSAGE: 'DigitalOcean - E2E tests failed'
+          SLACK_TITLE: DigitalOcean - E2E test failed
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
