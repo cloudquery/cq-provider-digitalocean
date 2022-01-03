@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationDatabases(t *testing.T) {
-	client.DOTestHelper(t, Databases(), "./snapshots")
+	client.DOTestHelper(t, Databases())
 }

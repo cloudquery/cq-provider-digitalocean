@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationAlertPolicies(t *testing.T) {
-	client.DOTestHelper(t, AlertPolicies(), "./snapshots")
+	client.DOTestHelper(t, AlertPolicies())
 }

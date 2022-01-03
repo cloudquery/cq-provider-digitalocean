@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationFloatingIps(t *testing.T) {
-	client.DOTestHelper(t, FloatingIps(), "./snapshots")
+	client.DOTestHelper(t, FloatingIps())
 }

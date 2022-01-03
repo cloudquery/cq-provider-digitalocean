@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationSizes(t *testing.T) {
-	client.DOTestHelper(t, Sizes(), "./snapshots")
+	client.DOTestHelper(t, Sizes())
 }

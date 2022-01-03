@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationDroplets(t *testing.T) {
-	client.DOTestHelper(t, Droplets(), "./snapshots")
+	client.DOTestHelper(t, Droplets())
 }

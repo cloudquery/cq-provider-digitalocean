@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationFirewalls(t *testing.T) {
-	client.DOTestHelper(t, Firewalls(), "./snapshots")
+	client.DOTestHelper(t, Firewalls())
 }

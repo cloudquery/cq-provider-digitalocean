@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationVolumes(t *testing.T) {
-	client.DOTestHelper(t, Volumes(), "./snapshots")
+	client.DOTestHelper(t, Volumes())
 }
