@@ -198,7 +198,7 @@ func Firewalls() *schema.Table {
 //                                               Table Resolver Functions
 // ====================================================================================================================
 
-func fetchFirewalls(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchFirewalls(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	svc := meta.(*client.Client)
 	// create options. initially, these will be blank
 	opt := &godo.ListOptions{
@@ -224,23 +224,23 @@ func fetchFirewalls(ctx context.Context, meta schema.ClientMeta, parent *schema.
 	}
 	return nil
 }
-func fetchFirewallInboundRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchFirewallInboundRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	fw := parent.Item.(godo.Firewall)
 	res <- fw.InboundRules
 	return nil
 }
 
-func fetchFirewallOutboundRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchFirewallOutboundRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	fw := parent.Item.(godo.Firewall)
 	res <- fw.OutboundRules
 	return nil
 }
-func fetchFirewallPendingChanges(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchFirewallPendingChanges(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	fw := parent.Item.(godo.Firewall)
 	res <- fw.PendingChanges
 	return nil
 }
-func fetchFirewallDroplets(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchFirewallDroplets(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	fw := parent.Item.(godo.Firewall)
 	if fw.DropletIDs == nil {
 		return nil

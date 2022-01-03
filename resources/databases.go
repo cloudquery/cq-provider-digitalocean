@@ -416,7 +416,7 @@ func Databases() *schema.Table {
 //                                               Table Resolver Functions
 // ====================================================================================================================
 
-func fetchDatabases(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchDatabases(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	svc := meta.(*client.Client)
 	// create options. initially, these will be blank
 	opt := &godo.ListOptions{
@@ -442,12 +442,12 @@ func fetchDatabases(ctx context.Context, meta schema.ClientMeta, parent *schema.
 	}
 	return nil
 }
-func fetchDatabaseUsers(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchDatabaseUsers(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	db := parent.Item.(godo.Database)
 	res <- db.Users
 	return nil
 }
-func fetchDatabaseBackups(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchDatabaseBackups(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	db := parent.Item.(godo.Database)
 	svc := meta.(*client.Client)
 	// create options. initially, these will be blank
@@ -474,7 +474,7 @@ func fetchDatabaseBackups(ctx context.Context, meta schema.ClientMeta, parent *s
 	}
 	return nil
 }
-func fetchDatabaseReplicas(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchDatabaseReplicas(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	db := parent.Item.(godo.Database)
 	svc := meta.(*client.Client)
 	// create options. initially, these will be blank
@@ -501,7 +501,7 @@ func fetchDatabaseReplicas(ctx context.Context, meta schema.ClientMeta, parent *
 	}
 	return nil
 }
-func fetchDatabaseFirewallRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchDatabaseFirewallRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	db := parent.Item.(godo.Database)
 	svc := meta.(*client.Client)
 	rules, _, err := svc.DoClient.Databases.GetFirewallRules(ctx, db.ID)

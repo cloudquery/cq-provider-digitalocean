@@ -144,7 +144,7 @@ func Spaces() *schema.Table {
 //                                               Table Resolver Functions
 // ====================================================================================================================
 
-func fetchSpaces(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchSpaces(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	svc := meta.(*client.Client)
 	buckets, err := svc.S3.ListBuckets(ctx, &s3.ListBucketsInput{}, func(options *s3.Options) {
 		options.Region = svc.SpacesRegion
@@ -199,7 +199,7 @@ func resolveSpacesAcls(ctx context.Context, meta schema.ClientMeta, space *Wrapp
 	return aclOutput.Grants, nil
 }
 
-func fetchSpacesAcls(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchSpacesAcls(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	r := parent.Item.(*WrappedBucket)
 	if r == nil {
 		return nil
@@ -208,7 +208,7 @@ func fetchSpacesAcls(ctx context.Context, meta schema.ClientMeta, parent *schema
 	return nil
 }
 
-func fetchSpaceCorsRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchSpaceCorsRules(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	var ae smithy.APIError
 	r := parent.Item.(*WrappedBucket)
 	svc := meta.(*client.Client).S3

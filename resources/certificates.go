@@ -66,7 +66,7 @@ func Certificates() *schema.Table {
 //                                               Table Resolver Functions
 // ====================================================================================================================
 
-func fetchCertificates(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchCertificates(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	svc := meta.(*client.Client)
 	// create options. initially, these will be blank
 	opt := &godo.ListOptions{

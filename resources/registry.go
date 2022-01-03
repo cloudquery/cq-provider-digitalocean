@@ -118,7 +118,7 @@ func Registries() *schema.Table {
 //                                               Table Resolver Functions
 // ====================================================================================================================
 
-func fetchRegistries(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchRegistries(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	svc := meta.(*client.Client)
 	registry, _, err := svc.DoClient.Registry.Get(ctx)
 	if err != nil {
@@ -127,7 +127,7 @@ func fetchRegistries(ctx context.Context, meta schema.ClientMeta, parent *schema
 	res <- registry
 	return nil
 }
-func fetchRegistryRepositories(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchRegistryRepositories(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	svc := meta.(*client.Client)
 
 	registry := parent.Item.(*godo.Registry)

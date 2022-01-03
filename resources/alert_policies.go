@@ -88,7 +88,7 @@ func AlertPolicies() *schema.Table {
 //                                               Table Resolver Functions
 // ====================================================================================================================
 
-func fetchAlertPolicies(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchAlertPolicies(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	svc := meta.(*client.Client)
 	// create options. initially, these will be blank
 	opt := &godo.ListOptions{
@@ -115,7 +115,7 @@ func fetchAlertPolicies(ctx context.Context, meta schema.ClientMeta, parent *sch
 	return nil
 }
 
-func fetchAlertPolicyAlertsSlacks(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan interface{}) error {
+func fetchAlertPolicyAlertsSlacks(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	ap := parent.Item.(godo.AlertPolicy)
 	res <- ap.Alerts.Slack
 	return nil
