@@ -10,10 +10,11 @@ import (
 
 func AlertPolicies() *schema.Table {
 	return &schema.Table{
-		Name:         "digitalocean_alert_policies",
-		Resolver:     fetchAlertPolicies,
-		DeleteFilter: client.DeleteFilter,
-		Options:      schema.TableCreationOptions{PrimaryKeys: []string{"id"}},
+		Name:          "digitalocean_alert_policies",
+		Resolver:      fetchAlertPolicies,
+		DeleteFilter:  client.DeleteFilter,
+		Options:       schema.TableCreationOptions{PrimaryKeys: []string{"id"}},
+		IgnoreInTests: true,
 		Columns: []schema.Column{
 			{
 				Name:     "id",
@@ -60,8 +61,9 @@ func AlertPolicies() *schema.Table {
 		},
 		Relations: []*schema.Table{
 			{
-				Name:     "digitalocean_alert_policy_alerts_slack",
-				Resolver: fetchAlertPolicyAlertsSlacks,
+				Name:          "digitalocean_alert_policy_alerts_slack",
+				Resolver:      fetchAlertPolicyAlertsSlacks,
+				IgnoreInTests: true,
 				Columns: []schema.Column{
 					{
 						Name:        "alert_policy_cq_id",

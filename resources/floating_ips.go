@@ -10,11 +10,12 @@ import (
 
 func FloatingIps() *schema.Table {
 	return &schema.Table{
-		Name:         "digitalocean_floating_ips",
-		Description:  "FloatingIP represents a Digital Ocean floating IP.",
-		Resolver:     fetchFloatingIps,
-		DeleteFilter: client.DeleteFilter,
-		Options:      schema.TableCreationOptions{PrimaryKeys: []string{"ip"}},
+		Name:          "digitalocean_floating_ips",
+		Description:   "FloatingIP represents a Digital Ocean floating IP.",
+		Resolver:      fetchFloatingIps,
+		DeleteFilter:  client.DeleteFilter,
+		Options:       schema.TableCreationOptions{PrimaryKeys: []string{"ip"}},
+		IgnoreInTests: true,
 		Columns: []schema.Column{
 			{
 				Name:        "droplet_id",

@@ -10,11 +10,12 @@ import (
 
 func Certificates() *schema.Table {
 	return &schema.Table{
-		Name:         "digitalocean_certificates",
-		Description:  "Certificate represents a DigitalOcean certificate configuration.",
-		Resolver:     fetchCertificates,
-		DeleteFilter: client.DeleteFilter,
-		Options:      schema.TableCreationOptions{PrimaryKeys: []string{"id"}},
+		Name:          "digitalocean_certificates",
+		Description:   "Certificate represents a DigitalOcean certificate configuration.",
+		Resolver:      fetchCertificates,
+		DeleteFilter:  client.DeleteFilter,
+		Options:       schema.TableCreationOptions{PrimaryKeys: []string{"id"}},
+		IgnoreInTests: true,
 		Columns: []schema.Column{
 			{
 				Name:        "id",

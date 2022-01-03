@@ -365,9 +365,10 @@ func Droplets() *schema.Table {
 				},
 			},
 			{
-				Name:        "digitalocean_droplet_neighbors",
-				Description: "Droplets that are co-located on the same physical hardware",
-				Resolver:    fetchDropletNeighbors,
+				Name:          "digitalocean_droplet_neighbors",
+				Description:   "Droplets that are co-located on the same physical hardware",
+				Resolver:      fetchDropletNeighbors,
+				IgnoreInTests: true,
 				Columns: []schema.Column{
 					{
 						Name:        "droplet_cq_id",

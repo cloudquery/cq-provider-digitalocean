@@ -39,11 +39,12 @@ func Registries() *schema.Table {
 		},
 		Relations: []*schema.Table{
 			{
-				Name:         "digitalocean_registry_repositories",
-				Description:  "Repository represents a repository",
-				Resolver:     fetchRegistryRepositories,
-				DeleteFilter: client.DeleteFilter,
-				Options:      schema.TableCreationOptions{PrimaryKeys: []string{"registry_cq_id", "name"}},
+				Name:          "digitalocean_registry_repositories",
+				Description:   "Repository represents a repository",
+				Resolver:      fetchRegistryRepositories,
+				DeleteFilter:  client.DeleteFilter,
+				Options:       schema.TableCreationOptions{PrimaryKeys: []string{"registry_cq_id", "name"}},
+				IgnoreInTests: true,
 				Columns: []schema.Column{
 					{
 						Name:        "registry_cq_id",

@@ -156,8 +156,9 @@ func LoadBalancers() *schema.Table {
 				Type:        schema.TypeString,
 			},
 			{
-				Name: "tags",
-				Type: schema.TypeStringArray,
+				Name:          "tags",
+				Type:          schema.TypeStringArray,
+				IgnoreInTests: true,
 			},
 			{
 				Name:        "redirect_http_to_https",

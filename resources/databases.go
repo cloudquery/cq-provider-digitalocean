@@ -166,10 +166,11 @@ func Databases() *schema.Table {
 				Resolver:    schema.PathResolver("MaintenanceWindow.Pending"),
 			},
 			{
-				Name:        "maintenance_window_description",
-				Description: "A list of strings, each containing information about a pending maintenance update.",
-				Type:        schema.TypeStringArray,
-				Resolver:    schema.PathResolver("MaintenanceWindow.Description"),
+				Name:          "maintenance_window_description",
+				Description:   "A list of strings, each containing information about a pending maintenance update.",
+				Type:          schema.TypeStringArray,
+				Resolver:      schema.PathResolver("MaintenanceWindow.Description"),
+				IgnoreInTests: true,
 			},
 			{
 				Name:        "created_at",
@@ -183,9 +184,10 @@ func Databases() *schema.Table {
 				Resolver:    schema.PathResolver("PrivateNetworkUUID"),
 			},
 			{
-				Name:        "tags",
-				Description: "An array of tags that have been applied to the database cluster.",
-				Type:        schema.TypeStringArray,
+				Name:          "tags",
+				Description:   "An array of tags that have been applied to the database cluster.",
+				Type:          schema.TypeStringArray,
+				IgnoreInTests: true,
 			},
 		},
 		Relations: []*schema.Table{
@@ -363,9 +365,10 @@ func Databases() *schema.Table {
 						Resolver:    schema.PathResolver("PrivateNetworkUUID"),
 					},
 					{
-						Name:        "tags",
-						Description: "A flat array of tag names as strings to apply to the read-only replica after it is created. Tag names can either be existing or new tags.",
-						Type:        schema.TypeStringArray,
+						Name:          "tags",
+						Description:   "A flat array of tag names as strings to apply to the read-only replica after it is created. Tag names can either be existing or new tags.",
+						Type:          schema.TypeStringArray,
+						IgnoreInTests: true,
 					},
 				},
 			},
