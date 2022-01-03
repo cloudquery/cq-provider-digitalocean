@@ -2,6 +2,7 @@ package resources
 
 import (
 	"context"
+	"log"
 
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
@@ -55,10 +56,11 @@ func Spaces() *schema.Table {
 						Resolver:    schema.ParentIdResolver,
 					},
 					{
-						Name:        "space_name",
-						Description: "name of the space.",
-						Type:        schema.TypeString,
-						Resolver:    schema.ParentPathResolver("name"),
+						Name:          "space_name",
+						Description:   "name of the space.",
+						Type:          schema.TypeString,
+						Resolver:      schema.ParentPathResolver("name"),
+						IgnoreInTests: true,
 					},
 					{
 						Name:        "allowed_methods",
@@ -83,9 +85,10 @@ func Spaces() *schema.Table {
 				},
 			},
 			{
-				Name:        "digitalocean_space_acls",
-				Description: " list of elements describing allowed methods for a specific origin.",
-				Resolver:    fetchSpacesAcls,
+				Name:          "digitalocean_space_acls",
+				Description:   " list of elements describing allowed methods for a specific origin.",
+				Resolver:      fetchSpacesAcls,
+				IgnoreInTests: true,
 				Columns: []schema.Column{
 					{
 						Name:        "space_cq_id",
@@ -150,8 +153,10 @@ func fetchSpaces(ctx context.Context, meta schema.ClientMeta, parent *schema.Res
 		options.Region = svc.SpacesRegion
 	})
 	if err != nil {
+		log.Println(err)
 		return err
 	}
+	log.Println(buckets.Buckets)
 	wb := make([]*WrappedBucket, len(buckets.Buckets))
 	for i, b := range buckets.Buckets {
 		wb[i] = &WrappedBucket{
