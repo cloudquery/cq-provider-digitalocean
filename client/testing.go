@@ -12,7 +12,7 @@ func DOTestHelper(t *testing.T, table *schema.Table, snapshotDirPath string) {
 	cfg := ``
 	providertest.TestResource(t, providertest.ResourceTestCase{
 		Provider: &provider.Provider{
-			Name:      "k8s_mock_test_provider",
+			Name:      "digitalocean_test_provider",
 			Version:   "development",
 			Configure: Configure,
 			Config: func() provider.Config {
