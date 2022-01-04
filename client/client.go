@@ -38,10 +38,6 @@ type DoCredentialStruct struct {
 	Spaces bool
 }
 
-func (c *Client) CredentialStatus() DoCredentialStruct {
-	return c.logger
-}
-
 func (c *Client) WithSpacesRegion(region string) *Client {
 	return &Client{
 		logger:       c.Logger().With("spaces_region", region),
