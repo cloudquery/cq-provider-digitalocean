@@ -15,7 +15,7 @@ resource "digitalocean_spaces_bucket" "do_spaces" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["PUT", "POST", "DELETE"]
-    allowed_origins = ["https://www.${var.test_prefix}-${var.test_suffix}.com"]
+    allowed_origins = ["https://www.${random_id.test_id.hex}.com"]
     max_age_seconds = 3000
   }
 
@@ -38,7 +38,7 @@ resource "digitalocean_spaces_bucket" "do_spaces_v2" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["PUT", "POST", "DELETE"]
-    allowed_origins = ["https://www.${var.test_prefix}-${var.test_suffix}.com"]
+    allowed_origins = ["https://www.${random_id.test_id.hex}.com"]
     max_age_seconds = 3000
   }
 
