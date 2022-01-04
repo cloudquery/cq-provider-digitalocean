@@ -4,11 +4,11 @@ init:
 
 .PHONY: apply
 apply:
-	@terraform apply --var test_suffix="integration" --var test_prefix="cq-testing"
+	@terraform apply --var test_suffix="" --var test_prefix=""
 
 .PHONY: destroy
 destroy:
-	@terraform destroy --var test_suffix="integration" --var test_prefix="cq-testing"
+	@terraform destroy --var test_suffix="" --var test_prefix=""
 
 .PHONY: clean
 clean:
