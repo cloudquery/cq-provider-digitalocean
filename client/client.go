@@ -53,7 +53,6 @@ type SpacesCredentialsProvider struct {
 }
 
 func (s SpacesCredentialsProvider) Retrieve(ctx context.Context) (aws.Credentials, error) {
-	//
 	return aws.Credentials{
 		AccessKeyID:     s.SpacesAccessKeyId,
 		SecretAccessKey: s.SpacesAccessKey,
