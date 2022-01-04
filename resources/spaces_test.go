@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationSpaces(t *testing.T) {
-	client.DOTestHelper(t, Spaces(), "./snapshots")
+	client.DOTestHelper(t, Spaces())
 }

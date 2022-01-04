@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationKeys(t *testing.T) {
-	client.DOTestHelper(t, Keys(), "./snapshots")
+	client.DOTestHelper(t, Keys())
 }

@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationCdns(t *testing.T) {
-	client.DOTestHelper(t, Cdns(), "./snapshots")
+	client.DOTestHelper(t, Cdns())
 }

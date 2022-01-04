@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationImages(t *testing.T) {
-	client.DOTestHelper(t, Images(), "./snapshots")
+	client.DOTestHelper(t, Images())
 }

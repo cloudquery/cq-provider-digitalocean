@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationRegistries(t *testing.T) {
-	client.DOTestHelper(t, Registries(), "./snapshots")
+	client.DOTestHelper(t, Registries())
 }

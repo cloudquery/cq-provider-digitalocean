@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationBillingHistory(t *testing.T) {
-	client.DOTestHelper(t, BillingHistory(), "./snapshots")
+	client.DOTestHelper(t, BillingHistory())
 }

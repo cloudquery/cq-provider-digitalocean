@@ -8,7 +8,7 @@ import (
 	providertest "github.com/cloudquery/cq-provider-sdk/provider/testing"
 )
 
-func DOTestHelper(t *testing.T, table *schema.Table, snapshotDirPath string) {
+func DOTestHelper(t *testing.T, table *schema.Table) {
 	cfg := ``
 	providertest.TestResource(t, providertest.ResourceTestCase{
 		Provider: &provider.Provider{

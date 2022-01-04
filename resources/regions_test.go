@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationRegions(t *testing.T) {
-	client.DOTestHelper(t, Regions(), "./snapshots")
+	client.DOTestHelper(t, Regions())
 }

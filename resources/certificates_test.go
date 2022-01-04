@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationCertificates(t *testing.T) {
-	client.DOTestHelper(t, Certificates(), "./snapshots")
+	client.DOTestHelper(t, Certificates())
 }

@@ -10,5 +10,5 @@ import (
 )
 
 func TestIntegrationLoadBalancers(t *testing.T) {
-	client.DOTestHelper(t, LoadBalancers(), "./snapshots")
+	client.DOTestHelper(t, LoadBalancers())
 }
