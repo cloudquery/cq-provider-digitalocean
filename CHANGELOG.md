@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v0.2.4] - 2022-01-04
 ###### SDK Version: 0.6.1
 ### 💥 Breaking Changes
-* Updated to SDK Version [v0.6.1](https://github.com/cloudquery/cq-provider-sdk/blob/main/CHANGELOG.md#v061---2022-01-03)
+* Updated to SDK Version [v0.6.1](https://github.com/cloudquery/cq-provider-sdk/blob/main/CHANGELOG.md#v061---2022-01-03) [#27](https://github.com/cloudquery/cq-provider-digitalocean/pull/27)
 
 
 ## [v0.1.0] - 2021-09-12
