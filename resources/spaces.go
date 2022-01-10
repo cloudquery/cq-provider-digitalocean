@@ -154,11 +154,12 @@ func fetchSpaces(ctx context.Context, meta schema.ClientMeta, parent *schema.Res
 		options.Region = svc.SpacesRegion
 	})
 	if err != nil {
-		log.Error("Failed to List Buckets", "Error", err)
 		if !svc.CredentialStatus.Spaces {
-			log.Warn("Spaces credentials not set")
+			log.Warn("Spaces credentials not set. skipping")
+			return nil
+		} else {
+			return err
 		}
-		return err
 	}
 
 	wb := make([]*WrappedBucket, len(buckets.Buckets))
