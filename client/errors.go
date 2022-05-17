@@ -26,7 +26,6 @@ func classifyError(err error, fallbackType diag.Type, opts ...diag.BaseErrorOpti
 					append(opts,
 						diag.WithType(diag.ACCESS),
 						diag.WithSeverity(diag.WARNING),
-						diag.WithError(errors.New(ae.Message)),
 					)...),
 				),
 			}
@@ -37,7 +36,6 @@ func classifyError(err error, fallbackType diag.Type, opts ...diag.BaseErrorOpti
 					append(opts,
 						diag.WithType(diag.THROTTLE),
 						diag.WithSeverity(diag.WARNING),
-						diag.WithError(errors.New(ae.Message)),
 					)...),
 				),
 			}
@@ -70,11 +68,11 @@ func RedactError(e diag.Diagnostic) diag.Diagnostic {
 }
 
 var (
-	requestIdRegex = regexp.MustCompile(`\s([Rr]equest:)\"\s[A-Za-z0-9-]+\"`)
+	requestIdRegex = regexp.MustCompile(`([Rr]equest[: ]+)\"[A-Za-z0-9-]+\"`)
 )
 
 func removePII(msg string) string {
-	msg = requestIdRegex.ReplaceAllString(msg, " ${1} xxxx")
+	msg = requestIdRegex.ReplaceAllString(msg, "${1} xxxx")
 	return msg
 }
 
@@ -84,17 +82,6 @@ func IsErrorMessage(err error, message string) bool {
 		return false
 	}
 	if message == ae.Message {
-		return true
-	}
-	return false
-}
-
-func IsErrorRegex(err error, messageRegex *regexp.Regexp) bool {
-	var ae *godo.ErrorResponse
-	if !errors.As(err, &ae) {
-		return false
-	}
-	if messageRegex.MatchString(ae.Message) {
 		return true
 	}
 	return false
