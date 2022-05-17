@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/cloudquery/cq-provider-digitalocean/client"
+	"github.com/cloudquery/cq-provider-sdk/provider/diag"
 	"github.com/cloudquery/cq-provider-sdk/provider/schema"
 	"github.com/digitalocean/godo"
 )
@@ -123,7 +124,7 @@ func fetchRegistries(ctx context.Context, meta schema.ClientMeta, parent *schema
 	svc := meta.(*client.Client)
 	registry, _, err := svc.DoClient.Registry.Get(ctx)
 	if err != nil {
-		return err
+		return diag.WrapError(err)
 	}
 	res <- registry
 	return nil
@@ -140,7 +141,13 @@ func fetchRegistryRepositories(ctx context.Context, meta schema.ClientMeta, pare
 	for {
 		certs, resp, err := svc.DoClient.Registry.ListRepositories(ctx, registry.Name, opt)
 		if err != nil {
-			return err
+
+			if client.IsErrorMessage(err, "registry does not exist") {
+				meta.Logger().Debug("received registry not found on ListRepositories", "err", err)
+				return nil
+			}
+
+			return diag.WrapError(err)
 		}
 		// pass the current page's project to our result channel
 		res <- certs
@@ -150,7 +157,7 @@ func fetchRegistryRepositories(ctx context.Context, meta schema.ClientMeta, pare
 		}
 		page, err := resp.Links.CurrentPage()
 		if err != nil {
-			return err
+			return diag.WrapError(err)
 		}
 		// set the page we want for the next request
 		opt.Page = page + 1

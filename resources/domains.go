@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/cloudquery/cq-provider-digitalocean/client"
+	"github.com/cloudquery/cq-provider-sdk/provider/diag"
 	"github.com/cloudquery/cq-provider-sdk/provider/schema"
 	"github.com/digitalocean/godo"
 )
@@ -117,7 +118,7 @@ func fetchDomains(ctx context.Context, meta schema.ClientMeta, parent *schema.Re
 	for {
 		domains, resp, err := svc.DoClient.Domains.List(ctx, opt)
 		if err != nil {
-			return err
+			return diag.WrapError(err)
 		}
 		// pass the current page's project to our result channel
 		res <- domains
@@ -127,7 +128,7 @@ func fetchDomains(ctx context.Context, meta schema.ClientMeta, parent *schema.Re
 		}
 		page, err := resp.Links.CurrentPage()
 		if err != nil {
-			return err
+			return diag.WrapError(err)
 		}
 		// set the page we want for the next request
 		opt.Page = page + 1
@@ -144,7 +145,7 @@ func fetchDomainRecords(ctx context.Context, meta schema.ClientMeta, parent *sch
 	for {
 		records, resp, err := svc.DoClient.Domains.Records(ctx, domain.Name, opt)
 		if err != nil {
-			return err
+			return diag.WrapError(err)
 		}
 		// pass the current page's project to our result channel
 		res <- records
@@ -154,7 +155,7 @@ func fetchDomainRecords(ctx context.Context, meta schema.ClientMeta, parent *sch
 		}
 		page, err := resp.Links.CurrentPage()
 		if err != nil {
-			return err
+			return diag.WrapError(err)
 		}
 		// set the page we want for the next request
 		opt.Page = page + 1

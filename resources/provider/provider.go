@@ -18,9 +18,10 @@ var (
 
 func Provider() *sdkprovider.Provider {
 	return &sdkprovider.Provider{
-		Version:   Version,
-		Name:      "digitalocean",
-		Configure: client.Configure,
+		Version:         Version,
+		Name:            "digitalocean",
+		Configure:       client.Configure,
+		ErrorClassifier: client.ErrorClassifier,
 		ResourceMap: map[string]*schema.Table{
 			"droplets":        resources.Droplets(),
 			"vpcs":            resources.Vpcs(),

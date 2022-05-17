@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/aws/smithy-go"
 	"github.com/cloudquery/cq-provider-digitalocean/client"
+	"github.com/cloudquery/cq-provider-sdk/provider/diag"
 	"github.com/cloudquery/cq-provider-sdk/provider/schema"
 	"github.com/pkg/errors"
 )
@@ -158,7 +159,7 @@ func fetchSpaces(ctx context.Context, meta schema.ClientMeta, parent *schema.Res
 			log.Warn("Spaces credentials not set. skipping")
 			return nil
 		} else {
-			return err
+			return diag.WrapError(err)
 		}
 	}
 
@@ -189,7 +190,7 @@ func resolveSpaceAttributes(ctx context.Context, meta schema.ClientMeta, resourc
 		}
 		if *a.Grantee.URI == publicAccessURI {
 			if err := resource.Set("public", true); err != nil {
-				return err
+				return diag.WrapError(err)
 			}
 			break
 		}
@@ -204,7 +205,7 @@ func resolveSpacesAcls(ctx context.Context, meta schema.ClientMeta, space *Wrapp
 		options.Region = space.Location
 	})
 	if err != nil && !(errors.As(err, &ae) && ae.ErrorCode() == "ServerSideEncryptionConfigurationNotFoundError") {
-		return nil, err
+		return nil, diag.WrapError(err)
 	}
 	return aclOutput.Grants, nil
 }
@@ -226,7 +227,7 @@ func fetchSpaceCorsRules(ctx context.Context, meta schema.ClientMeta, parent *sc
 		options.Region = r.Location
 	})
 	if err != nil && !(errors.As(err, &ae) && ae.ErrorCode() == "NoSuchCORSConfiguration") {
-		return err
+		return diag.WrapError(err)
 	}
 	if CORSOutput != nil {
 		res <- CORSOutput.CORSRules

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/cloudquery/cq-provider-digitalocean/client"
+	"github.com/cloudquery/cq-provider-sdk/provider/diag"
 	"github.com/cloudquery/cq-provider-sdk/provider/schema"
 	"github.com/digitalocean/godo"
 )
@@ -404,7 +405,7 @@ func fetchDroplets(ctx context.Context, meta schema.ClientMeta, parent *schema.R
 	for {
 		droplets, resp, err := svc.DoClient.Droplets.List(ctx, opt)
 		if err != nil {
-			return err
+			return diag.WrapError(err)
 		}
 		// pass the current page's project to our result channel
 		res <- droplets
@@ -414,7 +415,7 @@ func fetchDroplets(ctx context.Context, meta schema.ClientMeta, parent *schema.R
 		}
 		page, err := resp.Links.CurrentPage()
 		if err != nil {
-			return err
+			return diag.WrapError(err)
 		}
 		// set the page we want for the next request
 		opt.Page = page + 1
@@ -443,7 +444,7 @@ func fetchDropletNeighbors(ctx context.Context, meta schema.ClientMeta, parent *
 
 	neighbors, _, err := svc.DoClient.Droplets.Neighbors(ctx, droplet.ID)
 	if err != nil {
-		return err
+		return diag.WrapError(err)
 	}
 	if neighbors == nil {
 		return nil
