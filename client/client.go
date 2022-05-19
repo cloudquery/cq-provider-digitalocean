@@ -139,8 +139,8 @@ func getTokenFromEnv() string {
 }
 
 func getSpacesTokenFromEnv() (string, string) {
-	spacesAccessKey = os.Getenv("SPACES_ACCESS_KEY_ID")
-	spacesSecretKey = os.Getenv("SPACES_SECRET_ACCESS_KEY")
+	spacesAccessKey := os.Getenv("SPACES_ACCESS_KEY_ID")
+	spacesSecretKey := os.Getenv("SPACES_SECRET_ACCESS_KEY")
 	if spacesAccessKey == "" {
 		return "", ""
 	}
