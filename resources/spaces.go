@@ -7,10 +7,18 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/aws/smithy-go"
 	"github.com/cloudquery/cq-provider-digitalocean/client"
-	"github.com/cloudquery/cq-provider-sdk/provider/diag"
 	"github.com/cloudquery/cq-provider-sdk/provider/schema"
 	"github.com/pkg/errors"
 )
+
+type WrappedBucket struct {
+	types.Bucket
+	Location string
+	Public   bool
+	acls     []types.Grant
+}
+
+const publicAccessURI = "http://acs.amazonaws.com/groups/global/AllUsers"
 
 func Spaces() *schema.Table {
 	return &schema.Table{
@@ -158,9 +166,9 @@ func fetchSpaces(ctx context.Context, meta schema.ClientMeta, parent *schema.Res
 		if !svc.CredentialStatus.Spaces {
 			log.Warn("Spaces credentials not set. skipping")
 			return nil
-		} else {
-			return diag.WrapError(err)
 		}
+
+		return err
 	}
 
 	wb := make([]*WrappedBucket, len(buckets.Buckets))
@@ -190,7 +198,7 @@ func resolveSpaceAttributes(ctx context.Context, meta schema.ClientMeta, resourc
 		}
 		if *a.Grantee.URI == publicAccessURI {
 			if err := resource.Set("public", true); err != nil {
-				return diag.WrapError(err)
+				return err
 			}
 			break
 		}
@@ -205,7 +213,7 @@ func resolveSpacesAcls(ctx context.Context, meta schema.ClientMeta, space *Wrapp
 		options.Region = space.Location
 	})
 	if err != nil && !(errors.As(err, &ae) && ae.ErrorCode() == "ServerSideEncryptionConfigurationNotFoundError") {
-		return nil, diag.WrapError(err)
+		return nil, err
 	}
 	return aclOutput.Grants, nil
 }
@@ -223,23 +231,14 @@ func fetchSpaceCorsRules(ctx context.Context, meta schema.ClientMeta, parent *sc
 	var ae smithy.APIError
 	r := parent.Item.(*WrappedBucket)
 	svc := meta.(*client.Client).S3
-	CORSOutput, err := svc.GetBucketCors(ctx, &s3.GetBucketCorsInput{Bucket: r.Name}, func(options *s3.Options) {
+	corsOutput, err := svc.GetBucketCors(ctx, &s3.GetBucketCorsInput{Bucket: r.Name}, func(options *s3.Options) {
 		options.Region = r.Location
 	})
 	if err != nil && !(errors.As(err, &ae) && ae.ErrorCode() == "NoSuchCORSConfiguration") {
-		return diag.WrapError(err)
+		return err
 	}
-	if CORSOutput != nil {
-		res <- CORSOutput.CORSRules
+	if corsOutput != nil {
+		res <- corsOutput.CORSRules
 	}
 	return nil
 }
-
-type WrappedBucket struct {
-	types.Bucket
-	Location string
-	Public   bool
-	acls     []types.Grant
-}
-
-const publicAccessURI = "http://acs.amazonaws.com/groups/global/AllUsers"
