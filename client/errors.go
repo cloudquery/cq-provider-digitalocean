@@ -9,12 +9,15 @@ import (
 	"github.com/pkg/errors"
 )
 
+var (
+	requestIdRegex = regexp.MustCompile(`([Rr]equest[: ]+)\"[A-Za-z0-9-]+\"`)
+)
+
 func ErrorClassifier(_ schema.ClientMeta, resourceName string, err error) diag.Diagnostics {
 	return classifyError(err, diag.RESOLVING, diag.WithResourceName(resourceName))
 }
 
 func classifyError(err error, fallbackType diag.Type, opts ...diag.BaseErrorOption) diag.Diagnostics {
-
 	var ae *godo.ErrorResponse
 
 	if errors.As(err, &ae) {
@@ -66,10 +69,6 @@ func RedactError(e diag.Diagnostic) diag.Diagnostic {
 	)
 	return diag.NewRedactedDiagnostic(e, r)
 }
-
-var (
-	requestIdRegex = regexp.MustCompile(`([Rr]equest[: ]+)\"[A-Za-z0-9-]+\"`)
-)
 
 func removePII(msg string) string {
 	msg = requestIdRegex.ReplaceAllString(msg, "${1} xxxx")
