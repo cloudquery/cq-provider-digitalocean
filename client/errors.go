@@ -32,6 +32,16 @@ func classifyError(err error, fallbackType diag.Type, opts ...diag.BaseErrorOpti
 					)...),
 				),
 			}
+		case "Unable to authenticate you":
+			return diag.Diagnostics{
+				RedactError(diag.NewBaseError(err,
+					diag.ACCESS,
+					append(opts,
+						diag.WithType(diag.ACCESS),
+						diag.WithSeverity(diag.WARNING),
+					)...),
+				),
+			}
 		case "API Rate limit exceeded.":
 			return diag.Diagnostics{
 				RedactError(diag.NewBaseError(err,
