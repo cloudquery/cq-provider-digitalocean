@@ -3,15 +3,15 @@ package client
 // Provider Configuration
 
 type Config struct {
-	Token string `yaml:"token,optional"`
+	Token string `yaml:"token,omitempty"`
 	// SpacesRegions is a list of DO regions to fetch spaces from, if not given we execute on all regions
-	SpacesRegions []string `yaml:"spaces_regions,optional"`
+	SpacesRegions []string `yaml:"spaces_regions,omitempty"`
 	// SpacesAccessKey is the secret access token generated in DO control panel
-	SpacesAccessKey string `yaml:"spaces_access_key,optional"`
+	SpacesAccessKey string `yaml:"spaces_access_key,omitempty"`
 	// SpacesAccessKeyId is the unique identifier of the access key generated in the DO control panel
-	SpacesAccessKeyId string `yaml:"spaces_access_key_id,optional"`
+	SpacesAccessKeyId string `yaml:"spaces_access_key_id,omitempty"`
 	// SpacesDebugLogging allows enabling AWS S3 request logging on spaces requests
-	SpacesDebugLogging bool `yaml:"spaces_debug_logging,optional"`
+	SpacesDebugLogging bool `yaml:"spaces_debug_logging,omitempty"`
 }
 
 func (Config) Example() string {
